@@ -13,14 +13,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
-
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-
-        get("/", (req, res) -> "Hello World");
+        get("/", (req, res) -> "Hello, to use this app properly please go to computation part by adding to search address to /compute.");
 
         get("/compute",
             (rq, rs) -> {
