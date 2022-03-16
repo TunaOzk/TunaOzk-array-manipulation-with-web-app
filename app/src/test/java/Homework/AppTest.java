@@ -6,9 +6,32 @@ package Homework;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    @Test void elementIsNotFound() {
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4));
+        String result = App.changeElement(list, 7, 8);
+        String expected = " not computed." + 7 + " is not found in the given array.";
+        assertEquals(result, expected);
+    }
+    @Test void elementIsFound() {
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4));
+        String result = App.changeElement(list, 2, 5);
+        assertEquals(result, new ArrayList<>(Arrays.asList(1,5,3,4)).toString());
+    }
+    @Test void arrayIsNull() {
+        ArrayList<Integer> list = null;
+        String result = App.changeElement(list, 5, 7);
+        String expected = " not computed." + 5 + " is not found in the given array.";
+        assertEquals(result, expected);
+    }
+    @Test void toReplaceAndtoBeReplacedAreEqual() {
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4));
+        String result = App.changeElement(list, 4, 4);
+        String expected = " not computed. " + 4 + " and " + 4 + " are the same value.\n" 
+        + "Please try another value.";
+        assertEquals(result, expected);
     }
 }

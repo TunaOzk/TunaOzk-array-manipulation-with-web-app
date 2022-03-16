@@ -3,6 +3,7 @@
  */
 package Homework;
 
+import java.util.ArrayList;
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -11,4 +12,23 @@ public class App {
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
     }
+
+    public static String changeElement(ArrayList<Integer> list, int toBeReplaced, int toReplace) {
+        if(list == null)
+            return new String(" not computed." + toBeReplaced + " is not found in the given array.");
+        int index = -1;
+        for(int i = 0; i < list.size(); i++) {
+            if(list.get(i) == toBeReplaced) {
+                if(toBeReplaced == toReplace)
+                    return new String(" not computed. " + toBeReplaced + " and " + toReplace + " are the same value.\n" 
+                    + "Please try another value.");
+                list.set(i, toReplace);
+                index = i;
+            }
+        }
+        if(index == -1)
+            return new String(" not computed." + toBeReplaced + " is not found in the given array.");
+
+        return list.toString();
+    } 
 }
