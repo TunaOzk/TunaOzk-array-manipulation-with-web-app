@@ -4,6 +4,14 @@
 package Homework;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import spark.ModelAndView;
+import spark.template.mustache.MustacheTemplateEngine;
+import static spark.Spark.get;
+import static spark.Spark.post;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -11,11 +19,61 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+
+        get("/", (req, res) -> "Hello World");
+
+        get("/compute",
+            (rq, rs) -> {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("result", "not computed yet!");
+                return new ModelAndView(map, "compute.mustache");
+            },
+            new MustacheTemplateEngine()
+        );
+
+        post("/compute", (req, res) -> {
+            String integerInputs = req.queryParams("integerInputs");
+            java.util.Scanner sc1 = new java.util.Scanner(integerInputs);
+            sc1.useDelimiter("[;\r\n]+");
+            java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+            while(sc1.hasNext()) {
+                try {
+                    int value = Integer.parseInt(sc1.next().replaceAll("\\s", ""));
+                    inputList.add(value);
+                } catch (Exception e) {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("result", "not computed yet! Please enter valid inputs.");
+                    return new ModelAndView(map, "compute.mustache");
+                }
+            }
+            sc1.close();
+            System.out.println(inputList);
+            
+            String inputToBeReplaced = req.queryParams("inputToBeReplaced").replaceAll("\\s", "");
+            int inputToBeReplacedAsInt = 0;
+            String inputToReplaced = req.queryParams("inputToReplaced").replaceAll("\\s", "");
+            int inputToReplacedAsInt = 0;
+            
+            try {
+                inputToBeReplacedAsInt = Integer.parseInt(inputToBeReplaced);
+                inputToReplacedAsInt = Integer.parseInt(inputToReplaced);
+            } catch (Exception e) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("result", "not computed yet! Please enter valid inputs.");
+                return new ModelAndView(map, "compute.mustache");
+            }
+            String result = App.changeElement(inputList, inputToBeReplacedAsInt, inputToReplacedAsInt);
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("result", result);
+            return new ModelAndView(map, "compute.mustache");
+            }, new MustacheTemplateEngine()
+        );
+        
     }
 
     public static String changeElement(ArrayList<Integer> list, int toBeReplaced, int toReplace) {
         if(list == null)
-            return new String(" not computed." + toBeReplaced + " is not found in the given array.");
+            return new String(" not computed. " + toBeReplaced + " is not found in the given array.");
         int index = -1;
         for(int i = 0; i < list.size(); i++) {
             if(list.get(i) == toBeReplaced) {
@@ -27,7 +85,7 @@ public class App {
             }
         }
         if(index == -1)
-            return new String(" not computed." + toBeReplaced + " is not found in the given array.");
+            return new String(" not computed. " + toBeReplaced + " is not found in the given array.");
 
         return list.toString();
     } 

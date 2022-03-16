@@ -9,6 +9,8 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 repositories {
@@ -22,11 +24,14 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
+
+    implementation "com.sparkjava:spark-core:2.9.3"
+    implementation "com.sparkjava:spark-template-mustache:2.7.1"
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'Homework.App'
+    mainClassName = 'Homework.App'
 }
 
 tasks.named('test') {

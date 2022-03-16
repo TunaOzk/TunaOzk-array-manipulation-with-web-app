@@ -13,7 +13,7 @@ class AppTest {
     @Test void elementIsNotFound() {
         ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4));
         String result = App.changeElement(list, 7, 8);
-        String expected = " not computed." + 7 + " is not found in the given array.";
+        String expected = " not computed. " + 7 + " is not found in the given array.";
         assertEquals(result, expected);
     }
     @Test void elementIsFound() {
@@ -24,7 +24,7 @@ class AppTest {
     @Test void arrayIsNull() {
         ArrayList<Integer> list = null;
         String result = App.changeElement(list, 5, 7);
-        String expected = " not computed." + 5 + " is not found in the given array.";
+        String expected = " not computed. " + 5 + " is not found in the given array.";
         assertEquals(result, expected);
     }
     @Test void toReplaceAndtoBeReplacedAreEqual() {
