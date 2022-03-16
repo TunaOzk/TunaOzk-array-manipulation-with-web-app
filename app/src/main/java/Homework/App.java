@@ -11,9 +11,14 @@ import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.port;
 
 public class App {
     public static void main(String[] args) {
+
+        int port = Integer.parseInt(System.getenv("PORT"));
+        port(port);
+
         get("/", (req, res) -> "Hello, to use this app properly please go to computation part by adding to search address to /compute.");
 
         get("/compute",
